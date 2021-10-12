@@ -1,0 +1,77 @@
+// Comments can be declared by starting a given line with '#'. These will be ignored
+// when the rules are parsed and run.
+// Variables can be declared by prefixing with '$'. Separate their phonemes with commas.
+<consonant>, C = p, t, c, k, m, n, ɲ, ŋ, s, ç, x, h, ʋ, l, j, w
+<vowel>, V = i, iː, u, uː, a, aː
+<nasal>, N = m, n, ɲ, ŋ
+
+// pre-nasal 'i' becomes 'e'
+i/e/_N
+iː/eː/_N
+
+// word-initial 'n' becomes 'm'
+n/m/#_
+
+// 'h' is inserted before unstressed word-initial vowels
+/h/#_-V
+
+// stressed onset nasals become stops
+<nasal_to_stop> = b, d, ɟ, g
++N/<nasal_to_stop>/_+V
++N/<nasal_to_stop>/_+j+V
+
+// aspirated stops deaspirate word initially, and...
+<asp> = pʰ, tʰ, cʰ, kʰ
+<nasp> = p, t, c, k
+<asp>/<nasp>/#_
+
+// "[pʰ tʰ cʰ kʰ] turns to [f s ç x] elsewhere"
+<asplenition> = f, s, ç, x
+<asp>/<asplenition>/_
+
+// k/ts/(front V)_
+<front> = i, e, a
+k/ts/_<front>
+
+// voice fricatives intervocally
+<vlfric> = f, s, ç, x
+<vfric> = v, z, ʝ, ɣ
+<vlfric>/<vfric>/V_V
+
+// delete unstressed labiodental approximant after consonants
+<consonant>, C = p, t, c, k, b, d, ɟ, g, m, n, ɲ, ŋ, f, s, ç, x, v, z, ʝ, ɣ, h, ʋ, l, j, w
+-ʋ//C_
+
+// unstressed short vowels turned to schwa word-finally
+<ushort> = a, i, u
+-<ushort>/ə/_#
+
+// "unstressed i, u -> e, o"
+<from> = i, u
+<to> = e, o
+-<from>/<to>/_
+
+// a:, i:, u: -> aw, iw, uw, ew
+<from> = aː, iː, uː, eː
+<to> = a, i, u, e
+<from>/<to>w/_
+
+<vowel>, V = a, e, i, u, ə, o
+
+u/əw/_V
+
+// apheresis of unstressed initial vowels
+-V//#_
+-V//#C_
+
+// "/s/n_(approx.) /f/m_(approx.) /x/ŋ_(approx.)"
+A = w, ʋ, l
+/s/n_A
+/f/m_A
+/ç/ɲ_A
+/x/ŋ_A
+
+// voice consonants before l
+<from> = p, t, c, k, f, s, ç, x, h
+<to>   = b, d, ɟ, g, v, z, ʝ, ɣ, ɦ
+<from>/<to>/_l

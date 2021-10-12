@@ -1,0 +1,1 @@
+python3 src\applier.py data\rules.txt data\words.txt data\result.txt
